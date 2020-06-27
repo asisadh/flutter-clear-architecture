@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
-import '../../domain/entities/number_trivia.dart';
-import '../../../../core/errors/failures.dart';
+import 'package:learning/core/errors/failures.dart';
+import 'package:learning/features/number_trivia/domain/entities/number_trivia.dart';
+// import '../../domain/entities/number_trivia.dart';
+// import '../../../../core/errors/failures.dart';
 
-abstract class NumberTriviaRepository{
-  Future<Either<Failure,NumberTrivia>> getContreteNumberTrivia(int number);
-  Future<Either<Failure,NumberTrivia>> getRandomNumberTrivia();
+abstract class NumberTriviaRepository {
+  Future<Either<Failure, NumberTrivia>> getContreteNumberTrivia(int number);
+  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia();
 }
