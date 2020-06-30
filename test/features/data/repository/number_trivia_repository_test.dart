@@ -4,7 +4,7 @@ import 'package:learning/core/errors/exceptions.dart';
 import 'package:learning/core/errors/failures.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:learning/core/platform/network_info.dart';
+import 'package:learning/core/network/network_info.dart';
 import 'package:learning/features/number_trivia/data/datasource/number_trivia_local_data_source.dart';
 import 'package:learning/features/number_trivia/data/datasource/number_trivia_remote_data_source.dart';
 import 'package:learning/features/number_trivia/data/model/number_trivia_model.dart';
@@ -23,6 +23,26 @@ main() {
   MockRemoteDataSource remoteDataSource;
   MockLocalDataSource localDataSource;
   MockNetworkInfo networkInfo;
+
+  void runTestOnline(Function body) {
+    group('Device is online', () {
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => true);
+      });
+
+      body();
+    });
+  }
+
+  void runTestOffline(Function body) {
+    group('Device is Offline', () {
+      setUp(() {
+        when(networkInfo.isConnected).thenAnswer((_) async => false);
+      });
+
+      body();
+    });
+  }
 
   setUp(() {
     remoteDataSource = MockRemoteDataSource();
@@ -51,11 +71,7 @@ main() {
       verify(networkInfo.isConnected);
     });
 
-    group('Device is online', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-      });
-
+    runTestOnline(() {
       test(
           'Should return remote data when the call to remote data source is successful',
           () async {
@@ -97,10 +113,7 @@ main() {
       });
     });
 
-    group('Device is offline', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => false);
-      });
+    runTestOffline(() {
       test(
           'Should return local data when the call to local data source is successful',
           () async {
@@ -111,6 +124,20 @@ main() {
         final result = await repository.getContreteNumberTrivia(testNumber);
         //assert
         expect(result, equals(Right(tNumberTrivia)));
+        verify(localDataSource.getLatestNumberTrivia());
+        verifyNever(remoteDataSource.getContreteNumberTrivia(testNumber));
+      });
+
+      test(
+          'Should return Cache Error when the call to local data source is unsuccessful',
+          () async {
+        //arrange
+        when(localDataSource.getLatestNumberTrivia())
+            .thenThrow(CacheException());
+        //act
+        final result = await repository.getContreteNumberTrivia(testNumber);
+        //assert
+        expect(result, equals(left(CacheFailure())));
         verify(localDataSource.getLatestNumberTrivia());
         verifyNever(remoteDataSource.getContreteNumberTrivia(testNumber));
       });
@@ -133,11 +160,7 @@ main() {
       verify(networkInfo.isConnected);
     });
 
-    group('Device is online', () {
-      setUp(() {
-        when(networkInfo.isConnected).thenAnswer((_) async => true);
-      });
-
+    runTestOnline(() {
       test(
           'Should return remote data when the call to remote data source is successful',
           () async {
@@ -180,7 +203,7 @@ main() {
       });
     });
 
-    group('Device is offline', () {
+    runTestOffline(() {
       setUp(() {
         when(networkInfo.isConnected).thenAnswer((_) async => false);
       });
@@ -194,6 +217,20 @@ main() {
         final result = await repository.getRandomNumberTrivia();
         //assert
         expect(result, equals(Right(tNumberTrivia)));
+        verify(localDataSource.getLatestNumberTrivia());
+        verifyNever(remoteDataSource.getRandomNumberTrivia());
+      });
+
+      test(
+          'Should return Cache Error when the call to local data source is unsuccessful',
+          () async {
+        //arrange
+        when(localDataSource.getLatestNumberTrivia())
+            .thenThrow(CacheException());
+        //act
+        final result = await repository.getRandomNumberTrivia();
+        //assert
+        expect(result, equals(left(CacheFailure())));
         verify(localDataSource.getLatestNumberTrivia());
         verifyNever(remoteDataSource.getRandomNumberTrivia());
       });
