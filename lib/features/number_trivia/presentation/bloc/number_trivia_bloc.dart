@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:learning/core/errors/failures.dart';
 import 'package:learning/core/usecases/usecases.dart';
@@ -46,17 +47,21 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       }, (number) async* {
         yield Loading();
         final result = await getConcreteNumberTrivia(Params(number: number));
-        yield result.fold((failure) => Error(message: failure._mapFailure()),
-            (trivia) => Loaded(trivia: trivia));
+        yield* _getNumberTriviaState(result);
       });
     }
 
     if (event is GetTriviaForRandomNumber) {
       yield Loading();
       final result = await getRandomNumberTrivia(NoParams());
-      yield result.fold((failure) => Error(message: failure._mapFailure()),
-          (trivia) => Loaded(trivia: trivia));
+      yield* _getNumberTriviaState(result);
     }
+  }
+
+  Stream<NumberTriviaState> _getNumberTriviaState(
+      Either<Failure, NumberTrivia> result) async* {
+    yield result.fold((failure) => Error(message: failure._mapFailure()),
+        (trivia) => Loaded(trivia: trivia));
   }
 }
 
