@@ -11,6 +11,8 @@ class LoginResponseModel extends Equatable {
       {@required this.firstName,
       @required this.lastName,
       @required this.email,
-      @required this.token})
-      : super([firstName, lastName, email, token]);
+      @required this.token});
+
+  @override
+  List<Object> get props => [firstName, lastName, email, token];
 }

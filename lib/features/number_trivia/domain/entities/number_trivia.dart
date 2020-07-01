@@ -5,6 +5,8 @@ class NumberTrivia extends Equatable {
   final String text;
   final double number;
 
-  NumberTrivia({@required this.text, @required this.number})
-      : super([number, text]);
+  NumberTrivia({@required this.text, @required this.number});
+
+  @override
+  List<Object> get props => [text, number];
 }
