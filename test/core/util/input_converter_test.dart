@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:learning/utils/input_converter.dart';
-import 'package:mockito/mockito.dart';
 
 main() {
   InputConverter inputConverter;
@@ -36,6 +35,17 @@ main() {
   test('should return InvalidInputFailure when tried with negative number', () {
     //assign
     final String stringString = "-123";
+
+    //act
+    final result = inputConverter.stringToDouble(stringString);
+
+    //assert
+    expect(result, Left(InvalidInputFailure()));
+  });
+
+  test('should return InvalidInputFailure when tried with a null', () {
+    //assign
+    final String stringString = null;
 
     //act
     final result = inputConverter.stringToDouble(stringString);

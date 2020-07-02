@@ -40,7 +40,7 @@ Future<void> init() async {
   //! Core
   // network info
   sl.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(dataConnectionChecker: null));
+      () => NetworkInfoImpl(dataConnectionChecker: sl()));
 
   //! External
   //dataConnectionChecker

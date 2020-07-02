@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:learning/core/errors/exceptions.dart';
 import 'package:learning/features/number_trivia/data/model/number_trivia_model.dart';
 import 'package:learning/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' as Foundation;
 import 'package:meta/meta.dart';
 
 abstract class NumberTriviaRemoteDataSource {
@@ -36,6 +38,10 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
   }
 
   Future<NumberTrivia> _getConcreteOrRandomNumberTrivia(url) async {
+    if (Foundation.kDebugMode) {
+      log("url : $url");
+    }
+
     final response =
         await client.get(url, headers: {'Content-Type': 'application/json'});
 

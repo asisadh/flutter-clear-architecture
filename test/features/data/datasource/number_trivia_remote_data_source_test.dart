@@ -65,14 +65,13 @@ main() {
       //assign
       setUpHTTPCLient404();
       //act
-      final call = await dataSource.getContreteNumberTrivia;
+      final call = dataSource.getContreteNumberTrivia;
       //assert
       expect(() => call(number), throwsA(isA<ServerException>()));
     });
   });
 
   group('getRandomNumberTrivia', () {
-    final double number = 1;
     final tNumberTriviaModel =
         NumberTriviaModel.fromJSON(json.decode(stub('trivia.json')));
     test('''should perform a GET request on a URL without number
@@ -102,7 +101,7 @@ main() {
       //assign
       setUpHTTPCLient404();
       //act
-      final call = await dataSource.getRandomNumberTrivia;
+      final call = dataSource.getRandomNumberTrivia;
       //assert
       expect(() => call(), throwsA(isA<ServerException>()));
     });

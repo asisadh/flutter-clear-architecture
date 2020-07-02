@@ -143,8 +143,6 @@ main() {
   });
 
   group('GetTriviaForRandomNumber', () {
-    final tString = "1";
-    final double tNUmber = 1;
     final trivia = NumberTrivia(number: 1, text: "test trivia");
 
     test('should get data from the concerete use case.', () async {
