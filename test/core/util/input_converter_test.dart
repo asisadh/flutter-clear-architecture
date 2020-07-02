@@ -9,16 +9,16 @@ main() {
     inputConverter = InputConverter();
   });
 
-  test('convert doubleString to double successfully', () {
+  test('convert String to int successfully', () {
     //assign
-    final String doubleString = "1.0";
-    final double doubleValue = 1.0;
+    final String string = "1";
+    final int value = 1;
 
     //act
-    final result = inputConverter.stringToDouble(doubleString);
+    final result = inputConverter.stringToInt(string);
 
     //assert
-    expect(result, Right(doubleValue));
+    expect(result, Right(value));
   });
 
   test('try convert string to double return InvalidInputFailure', () {
@@ -26,7 +26,7 @@ main() {
     final String stringString = "test";
 
     //act
-    final result = inputConverter.stringToDouble(stringString);
+    final result = inputConverter.stringToInt(stringString);
 
     //assert
     expect(result, Left(InvalidInputFailure()));
@@ -37,7 +37,7 @@ main() {
     final String stringString = "-123";
 
     //act
-    final result = inputConverter.stringToDouble(stringString);
+    final result = inputConverter.stringToInt(stringString);
 
     //assert
     expect(result, Left(InvalidInputFailure()));
@@ -48,7 +48,7 @@ main() {
     final String stringString = null;
 
     //act
-    final result = inputConverter.stringToDouble(stringString);
+    final result = inputConverter.stringToInt(stringString);
 
     //assert
     expect(result, Left(InvalidInputFailure()));

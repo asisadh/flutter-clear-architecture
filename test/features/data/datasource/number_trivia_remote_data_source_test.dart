@@ -35,7 +35,7 @@ main() {
   });
 
   group('getContreteNumberTrivia', () {
-    final double number = 1;
+    final int number = 1;
     final tNumberTriviaModel =
         NumberTriviaModel.fromJSON(json.decode(stub('trivia.json')));
     test('''should perform a GET request on a URL with number

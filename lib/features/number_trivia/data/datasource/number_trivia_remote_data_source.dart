@@ -13,7 +13,7 @@ abstract class NumberTriviaRemoteDataSource {
   /// Calls the https://numbersapi.com/{number} endpoint
   ///
   /// Throws [ServerException] for all error codes.
-  Future<NumberTrivia> getContreteNumberTrivia(double number);
+  Future<NumberTrivia> getContreteNumberTrivia(int number);
 
   /// Calls the https://numbersapi.com/random endpoint
   ///
@@ -29,7 +29,7 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
 
   NumberTriviaRemoteDataSourceImpl({@required this.client});
 
-  Future<NumberTrivia> getContreteNumberTrivia(double number) async {
+  Future<NumberTrivia> getContreteNumberTrivia(int number) async {
     return _getConcreteOrRandomNumberTrivia(BASE_URL + '/$number');
   }
 

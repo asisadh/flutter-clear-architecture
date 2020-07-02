@@ -22,7 +22,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
 
   @override
   Future<Either<Failure, NumberTrivia>> getContreteNumberTrivia(
-      double number) async {
+      int number) async {
     return await _getNumberTrivia(() {
       return remoteDataSource.getContreteNumberTrivia(number);
     });

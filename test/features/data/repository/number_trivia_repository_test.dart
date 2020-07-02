@@ -56,7 +56,7 @@ main() {
   });
 
   group('getConcreteNumberTrivia', () {
-    final double testNumber = 1.0;
+    final int testNumber = 1;
     final tNumnerTriviaModel =
         NumberTriviaModel(text: "test text", number: testNumber);
 
@@ -145,7 +145,7 @@ main() {
   });
 
   group('getRandomNumberTrivia', () {
-    final double testNumber = 1.0;
+    final int testNumber = 1;
     final tNumnerTriviaModel =
         NumberTriviaModel(text: "test text", number: testNumber);
 

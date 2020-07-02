@@ -18,7 +18,7 @@ main() {
     usecase = GetRandomNumberTrivia(mockNumberTriviaRepository);
   });
 
-  final testNumber = 1.0;
+  final testNumber = 1;
   final testNumberTrivia = NumberTrivia(number: testNumber, text: "");
 
   test('should get trivia for the number from the repository', () async {

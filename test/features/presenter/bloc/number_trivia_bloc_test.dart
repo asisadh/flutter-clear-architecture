@@ -39,24 +39,24 @@ main() {
 
   group('GetTriviaForConcreteNumber', () {
     final tString = "1";
-    final double tNUmber = 1;
+    final int tNUmber = 1;
     final trivia = NumberTrivia(number: 1, text: "test trivia");
     test(
         'should call the InputConverter to validate and convert the string to a double.',
         () async {
       //assign
-      when(inputConverter.stringToDouble(any)).thenReturn(Right(tNUmber));
+      when(inputConverter.stringToInt(any)).thenReturn(Right(tNUmber));
 
       //act
       bloc.add(GetTriviaForConcreteNumber(numberString: tString));
-      await untilCalled(inputConverter.stringToDouble(any));
+      await untilCalled(inputConverter.stringToInt(any));
       //assert
-      verify(inputConverter.stringToDouble(tString));
+      verify(inputConverter.stringToInt(tString));
     });
 
     test('should emit [Error] when the input is invalid.', () async {
       //assign
-      when(inputConverter.stringToDouble(any))
+      when(inputConverter.stringToInt(any))
           .thenReturn(Left(InvalidInputFailure()));
 
       //assert Later
@@ -68,12 +68,12 @@ main() {
 
       //act
       bloc.add(GetTriviaForConcreteNumber(numberString: tString));
-      await untilCalled(inputConverter.stringToDouble(any));
+      await untilCalled(inputConverter.stringToInt(any));
     });
 
     test('should get data from the concerete use case.', () async {
       //assign
-      when(inputConverter.stringToDouble(any)).thenReturn(Right(tNUmber));
+      when(inputConverter.stringToInt(any)).thenReturn(Right(tNUmber));
       when(concreteNumberTrivia(any)).thenAnswer((_) async => Right(trivia));
 
       //act
@@ -87,7 +87,7 @@ main() {
     test('should emit [Loding, Loaded] when data is gotten successfully.',
         () async {
       //assign
-      when(inputConverter.stringToDouble(any)).thenReturn(Right(tNUmber));
+      when(inputConverter.stringToInt(any)).thenReturn(Right(tNUmber));
       when(concreteNumberTrivia(any)).thenAnswer((_) async => Right(trivia));
 
       //assert Later
@@ -105,7 +105,7 @@ main() {
     test('should emit [Loding, Error] when data fetch is unsuccessfully.',
         () async {
       //assign
-      when(inputConverter.stringToDouble(any)).thenReturn(Right(tNUmber));
+      when(inputConverter.stringToInt(any)).thenReturn(Right(tNUmber));
       when(concreteNumberTrivia(any))
           .thenAnswer((_) async => Left(ServerFailure()));
 
@@ -125,7 +125,7 @@ main() {
         'should emit [Loding, Error] when data fetch is unsuccessfully with proper message.',
         () async {
       //assign
-      when(inputConverter.stringToDouble(any)).thenReturn(Right(tNUmber));
+      when(inputConverter.stringToInt(any)).thenReturn(Right(tNUmber));
       when(concreteNumberTrivia(any))
           .thenAnswer((_) async => Left(CacheFailure()));
 

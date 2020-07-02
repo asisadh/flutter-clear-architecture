@@ -42,7 +42,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     NumberTriviaEvent event,
   ) async* {
     if (event is GetTriviaForConcreteNumber) {
-      final inputEither = inputConverter.stringToDouble(event.numberString);
+      final inputEither = inputConverter.stringToInt(event.numberString);
       yield* inputEither.fold((failure) async* {
         yield Error(message: ERROR_MESSAGE_FOR_INVALID_INPUTS);
       }, (number) async* {
