@@ -7,4 +7,5 @@ workflows:
             flutter: dev
         scripts:
             - flutter packages pub get
+            - flutter pub run build_runner watch --delete-conflicting-outputs
             - flutter test
